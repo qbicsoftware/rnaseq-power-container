@@ -1,5 +1,5 @@
 From:nfcore/base
-Bootstrap:docker
+Bootstrap: docker
 
 %labels
     MAINTAINER Andreas Friedrich <andreas.friedrich@qbic.uni-tuebingen.de>
