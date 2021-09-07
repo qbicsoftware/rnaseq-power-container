@@ -30,7 +30,8 @@ def fetchData(app, arguments):
 	filePath = os.path.join(DATA_PATH, RAW_COUNT_FILE)
 	arguments = [a.replace(code, filePath) for a in arguments]
 
-	print("arguments with file: "+arguments)
+	print("arguments with file:")
+	print(arguments)
 
 	if not os.path.exists(DATA_PATH):
 		os.mkdir(DATA_PATH)
@@ -61,7 +62,8 @@ source = arguments[0]
 
 if source=="data":
 	fetchData(app, arguments)
-	print("arguments again: "+arguments)
+	print("arguments again: ")
+	print(arguments)
 if app=="power":
 	filename = "power.pdf"
 	cmd = ["Rscript", "/power_matrix.R"] + arguments
