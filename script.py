@@ -22,6 +22,13 @@ samples tcga [# genes] [# diff expr. genes] [FDR] [TCGA name]
 OR
 samples data [# genes] [# diff expr. genes] [FDR] [code of pilot dataset]'''
 
+def log_output(name, result, error):
+	print(name+" output:")
+	print(result)
+	if error:
+		print("error:")
+		print(error)
+
 def fetchData(app, arguments):
 	if(app=="power"):
 		code = arguments[5]
@@ -29,9 +36,6 @@ def fetchData(app, arguments):
 		code = arguments[4]
 	filePath = RAW_COUNT_FILE
 	arguments = [a.replace(code, filePath) for a in arguments]
-
-	print("arguments with file:")
-	print(arguments)
 
 #	if not os.path.exists(DATA_PATH):
 #		os.mkdir(DATA_PATH)
@@ -47,9 +51,7 @@ def fetchData(app, arguments):
 		(result, error) = p.communicate()
 	except subprocess.CalledProcessError as e:
 		sys.stderr.write("common::run_command() : [ERROR]: output = %s, error code = %s\n" % (e.output, e.returncode))
-	print("result and errors:")
-	print(result)
-	print(error)
+	log_output("postman", result, error)
 	return arguments
 	
 if len(sys.argv) < 4:
@@ -64,18 +66,16 @@ source = arguments[0]
 
 if source=="data":
 	arguments = fetchData(app, arguments)
-	print("arguments again: ")
-	print(arguments)
 if app=="power":
-	filename = "power.pdf"
+	resultFile = "power.pdf"
 	cmd = ["Rscript", "/power_matrix.R"] + arguments
 elif app=="samples":
-	filename = "sample_size.pdf"
+	resultFile = "sample_size.pdf"
 	cmd = ["Rscript", "/sample_size_matrix.R"] + arguments
 else:
 	print(USAGE)
 	exit()
-cmd += [filename]
+cmd += [resultFile]
 print(cmd)
 
 try:
@@ -85,10 +85,7 @@ try:
 except subprocess.CalledProcessError as e:
 	sys.stderr.write("common::run_command() : [ERROR]: output = %s, error code = %s\n" % (e.output, e.returncode))
 
-print("result of R call:")
-print(result)
-print("errors: ")
-print(error)
+log_output("R call", result, error)
 
 #create results folder
 results_path = "results"
@@ -105,10 +102,7 @@ try:
 except subprocess.CalledProcessError as e:
 	sys.stderr.write("common::run_command() : [ERROR]: output = %s, error code = %s\n" % (e.output, e.returncode))
 
-print("attachi: ")
-print(result)
-print("errors: ")
-print(error)
+log_output("attachi", result, error)
 
 listed_dir = os.listdir(results_path)
 if len(listed_dir) == 1:
@@ -129,10 +123,7 @@ try:
 except subprocess.CalledProcessError as e:
 	sys.stderr.write("common::run_command() : [ERROR]: output = %s, error code = %s\n" % (e.output, e.returncode))
 
-print("results")
-print(result)
-print("errors")
-print(error)
+log_output("sed", result, error)
 
 os.rename(old_results_path, upload_folder)
 
@@ -147,7 +138,16 @@ try:
 except subprocess.CalledProcessError as e:
 	sys.stderr.write("common::run_command() : [ERROR]: output = %s, error code = %s\n" % (e.output, e.returncode))
 
-print("dync results: ")
-print(result)
-print("errors: ")
-print(error)
+log_output("dync", result, error)
+
+# Cleanup
+delete_cmd = ["rm" RAW_COUNT_FILE, resultFile]
+
+try:
+	p = subprocess.Popen(delete_cmd, stdout = subprocess.PIPE, stdin=tar.stdout)
+	p.wait()
+	(result, error) = p.communicate()
+except subprocess.CalledProcessError as e:
+	sys.stderr.write("common::run_command() : [ERROR]: output = %s, error code = %s\n" % (e.output, e.returncode))
+
+log_output("cleanup", result, error)
