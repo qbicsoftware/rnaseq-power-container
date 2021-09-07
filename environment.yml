@@ -1,0 +1,14 @@
+name: rnaseqsamplesize-1.0
+channels:
+  - bioconda
+  - conda-forge
+  - defaults
+dependencies:
+  - anaconda::openjdk=8.0.152
+  - r::r-base=3.5.1
+  - bioconda::bioconductor-rnaseqsamplesize=1.12.0
+  - conda-forge::libgfortran=3.0.0
+  - pip
+  - pip:
+    - dync
+    - attachi
