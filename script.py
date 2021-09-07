@@ -27,14 +27,14 @@ def fetchData(app, arguments):
 		code = arguments[5]
 	if(app=="samples"):
 		code = arguments[4]
-	filePath = os.path.join(DATA_PATH, RAW_COUNT_FILE)
+	filePath = RAW_COUNT_FILE
 	arguments = [a.replace(code, filePath) for a in arguments]
 
 	print("arguments with file:")
 	print(arguments)
 
-	if not os.path.exists(DATA_PATH):
-		os.mkdir(DATA_PATH)
+#	if not os.path.exists(DATA_PATH):
+#		os.mkdir(DATA_PATH)
 	cpar = configparser.RawConfigParser()
 	cpar.read(POSTMAN_USER_CONFIG_PATH)
 	pm_user = cpar.get('postman login','user')
@@ -47,8 +47,9 @@ def fetchData(app, arguments):
 		(result, error) = p.communicate()
 	except subprocess.CalledProcessError as e:
 		sys.stderr.write("common::run_command() : [ERROR]: output = %s, error code = %s\n" % (e.output, e.returncode))
-	print("result: "+result)
-	print("errors: "+error)
+	print("result and errors:")
+	print(result)
+	print(error)
 	
 if len(sys.argv) < 4:
 	print(USAGE)
@@ -83,8 +84,10 @@ try:
 except subprocess.CalledProcessError as e:
 	sys.stderr.write("common::run_command() : [ERROR]: output = %s, error code = %s\n" % (e.output, e.returncode))
 
-print("result of R call: "+result)
-print("errors: "+error)
+print("result of R call:")
+print(result)
+print("errors: ")
+print(error)
 
 #create results folder
 results_path = "results"
@@ -101,8 +104,10 @@ try:
 except subprocess.CalledProcessError as e:
 	sys.stderr.write("common::run_command() : [ERROR]: output = %s, error code = %s\n" % (e.output, e.returncode))
 
-print("attachi: "+result)
-print("errors: "+error)
+print("attachi: ")
+print(result)
+print("errors: ")
+print(error)
 
 listed_dir = os.listdir(results_path)
 if len(listed_dir) == 1:
@@ -141,5 +146,7 @@ try:
 except subprocess.CalledProcessError as e:
 	sys.stderr.write("common::run_command() : [ERROR]: output = %s, error code = %s\n" % (e.output, e.returncode))
 
-print("dync results: "+result)
-print("errors: "+error)
+print("dync results: ")
+print(result)
+print("errors: ")
+print(error)

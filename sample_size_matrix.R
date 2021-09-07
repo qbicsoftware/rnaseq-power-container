@@ -17,7 +17,7 @@ if(mode=="none") {
   result<-optimize_parameter(fun=sample_size,main=main,opt1="rho", opt2="power",opt1Value=c(1.5,2,3,4), opt2Value=c(0.5,0.6,0.7,0.8,0.9,0.95), lambda0=lambda0, m=m, m1=m1, phi0=phi0, f=f)
 }
 if(mode=="file") {
-  countsPath <- args[5]
+  counts_file_path <- args[5]
   tab = read.table(counts_file_path, header=TRUE, sep="\t")
   counts <- as.matrix(tab[-1,-1])
   dim(counts)
