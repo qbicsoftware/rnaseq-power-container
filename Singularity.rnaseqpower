@@ -1,5 +1,5 @@
-From:nfcore/base
 Bootstrap: docker
+From: wow-such-code/rnaseqpower
 
 %labels
     MAINTAINER Andreas Friedrich <andreas.friedrich@qbic.uni-tuebingen.de>
