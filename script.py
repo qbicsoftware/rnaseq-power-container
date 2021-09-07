@@ -29,6 +29,9 @@ def fetchData(app, arguments):
 		code = arguments[4]
 	filePath = os.path.join(DATA_PATH, RAW_COUNT_FILE)
 	arguments = [a.replace(code, filePath) for a in arguments]
+
+	print("arguments with file: "+arguments)
+
 	if not os.path.exists(DATA_PATH):
 		os.mkdir(DATA_PATH)
 	cpar = configparser.RawConfigParser()
@@ -43,8 +46,8 @@ def fetchData(app, arguments):
 		(result, error) = p.communicate()
 	except subprocess.CalledProcessError as e:
 		sys.stderr.write("common::run_command() : [ERROR]: output = %s, error code = %s\n" % (e.output, e.returncode))
-	print(result)
-	print(error)
+	print("result: "+result)
+	print("errors: "+error)
 	
 if len(sys.argv) < 4:
 	print(USAGE)
@@ -58,6 +61,7 @@ source = arguments[0]
 
 if source=="data":
 	fetchData(app, arguments)
+	print("arguments again: "+arguments)
 if app=="power":
 	filename = "power.pdf"
 	cmd = ["Rscript", "/power_matrix.R"] + arguments
@@ -77,8 +81,8 @@ try:
 except subprocess.CalledProcessError as e:
 	sys.stderr.write("common::run_command() : [ERROR]: output = %s, error code = %s\n" % (e.output, e.returncode))
 
-print(result)
-print(error)
+print("result of R call: "+result)
+print("errors: "+error)
 
 #create results folder
 results_path = "results"
@@ -95,8 +99,8 @@ try:
 except subprocess.CalledProcessError as e:
 	sys.stderr.write("common::run_command() : [ERROR]: output = %s, error code = %s\n" % (e.output, e.returncode))
 
-print(result)
-print(error)
+print("attachi: "+result)
+print("errors: "+error)
 
 listed_dir = os.listdir(results_path)
 if len(listed_dir) == 1:
@@ -117,8 +121,11 @@ try:
 except subprocess.CalledProcessError as e:
 	sys.stderr.write("common::run_command() : [ERROR]: output = %s, error code = %s\n" % (e.output, e.returncode))
 
+print("results")
 print(result)
+print("errors")
 print(error)
+
 os.rename(old_results_path, upload_folder)
 
 tar_cmd = ["tar", "-c", upload_folder]
@@ -132,5 +139,5 @@ try:
 except subprocess.CalledProcessError as e:
 	sys.stderr.write("common::run_command() : [ERROR]: output = %s, error code = %s\n" % (e.output, e.returncode))
 
-print(result)
-print(error)
+print("dync results: "+result)
+print("errors: "+error)
