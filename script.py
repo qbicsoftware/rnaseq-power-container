@@ -50,6 +50,7 @@ def fetchData(app, arguments):
 	print("result and errors:")
 	print(result)
 	print(error)
+	return arguments
 	
 if len(sys.argv) < 4:
 	print(USAGE)
@@ -62,7 +63,7 @@ arguments = sys.argv[4:]
 source = arguments[0]
 
 if source=="data":
-	fetchData(app, arguments)
+	arguments = fetchData(app, arguments)
 	print("arguments again: ")
 	print(arguments)
 if app=="power":
