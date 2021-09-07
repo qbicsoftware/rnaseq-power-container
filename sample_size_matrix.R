@@ -16,7 +16,7 @@ if(mode=="none") {
   result_file <- args[7]
   result<-optimize_parameter(fun=sample_size,main=main,opt1="rho", opt2="power",opt1Value=c(1.5,2,3,4), opt2Value=c(0.5,0.6,0.7,0.8,0.9,0.95), lambda0=lambda0, m=m, m1=m1, phi0=phi0, f=f)
 }
-if(mode=="file") {
+if(mode=="data") {
   counts_file_path <- args[5]
   tab = read.table(counts_file_path, header=TRUE, sep="\t")
   counts <- as.matrix(tab[-1,-1])
@@ -29,7 +29,7 @@ if(mode=="tcga") {
   distrObject <- args[5]
   #data(list = distrObject)
 }
-if(mode=="tcga" || mode=="file") {
+if(mode=="tcga" || mode=="data") {
   result_file <- args[6]
   result<-optimize_parameter(fun=sample_size_distribution,main=main,opt1="rho", opt2="power",opt1Value=c(1.5,2,3,4), opt2Value=c(0.5,0.6,0.7,0.8,0.9,0.95),distributionObject=distrObject, m=m, m1=m1,f=f)  
 }
