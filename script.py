@@ -141,7 +141,7 @@ except subprocess.CalledProcessError as e:
 log_output("dync", result, error)
 
 # Cleanup
-delete_cmd = ["rm" RAW_COUNT_FILE, resultFile]
+delete_cmd = ["rm", RAW_COUNT_FILE, resultFile]
 
 try:
 	p = subprocess.Popen(delete_cmd, stdout = subprocess.PIPE, stdin=tar.stdout)
