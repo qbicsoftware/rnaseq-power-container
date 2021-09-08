@@ -92,7 +92,7 @@ results_path = "results"
 if not os.path.exists(results_path):
 	os.mkdir(results_path)
 
-cmd = ["attachi", "-o", results_path, "-u", user, "-t", "Information", project, filename, "RnaSeqSampleSize analysis for "+project]
+cmd = ["attachi", "-o", results_path, "-u", user, "-t", "Information", project, resultFile, "RnaSeqSampleSize analysis for "+project]
 print(cmd)
 
 try:
