@@ -140,8 +140,10 @@ except subprocess.CalledProcessError as e:
 
 log_output("dync", result, error)
 
+# TODO
+downloadedFiles = []
 # Cleanup
-delete_cmd = ["rm", RAW_COUNT_FILE, resultFile]
+delete_cmd = ["rm", RAW_COUNT_FILE, resultFile, "Rplots.pdf"] + downloadedFiles
 
 try:
 	p = subprocess.Popen(delete_cmd, stdout = subprocess.PIPE, stdin=tar.stdout)
