@@ -23,11 +23,15 @@ if(mode=="data") {
   tab = tab[sapply(tab, is.numeric)]
   counts <- as.matrix(tab[-1,-1])
   dim(counts)
+  # if there are less than 1000 genes we need to create more data, as RNASeqSampleSize doesn't work otherwise...
+  if(nrow(counts) < 1000) {
+    copies <- ceiling(1000/nrow(counts))
+    counts <- do.call(rbind, replicate(copies, counts, simplify=FALSE))
+  }
   distrObject <- est_count_dispersion(counts)
-  testGenes = min(1000,nrow(counts))
+  
 }
 if(mode=="tcga") {
-  testGenes = 1000
   distrObject <- args[5]
   #data(list = distrObject)
 }
