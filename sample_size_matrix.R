@@ -19,6 +19,8 @@ if(mode=="none") {
 if(mode=="data") {
   counts_file_path <- args[5]
   tab = read.table(counts_file_path, header=TRUE, sep="\t")
+  # only keep read counts
+  tab = tab[sapply(tab, is.numeric)]
   counts <- as.matrix(tab[-1,-1])
   dim(counts)
   distrObject <- est_count_dispersion(counts)
