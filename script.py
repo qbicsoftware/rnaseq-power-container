@@ -9,11 +9,11 @@ USAGE = '''USAGE
 [user] [sampleCode] [app = power/samples] [app parameters...]
 
 power estimation parameters:
-power none [# genes] [# diff. expr. genes] [replicates (sample size)] [FDR] [dispersion]
+power none [# genes] [# diff. expr. genes] [replicates (sample size)] [dispersion]
 OR
-power tcga [# genes] [# diff. expr. genes] [replicates (sample size)] [FDR] [TCGA name]
+power tcga [# genes] [# diff. expr. genes] [replicates (sample size)] [TCGA name]
 OR
-power data [# genes] [# diff. expr. genes] [replicates (sample size)] [FDR] [code of pilot dataset]
+power data [# genes] [# diff. expr. genes] [replicates (sample size)] [code of pilot dataset]
 
 sample size estimation:
 samples none [# genes] [# diff expr. genes] [FDR] [dispersion] [avg counts/gene]
@@ -31,7 +31,7 @@ def log_output(name, result, error):
 
 def fetchData(app, arguments):
 	if(app=="power"):
-		code = arguments[5]
+		code = arguments[4]
 	if(app=="samples"):
 		code = arguments[4]
 	filePath = RAW_COUNT_FILE

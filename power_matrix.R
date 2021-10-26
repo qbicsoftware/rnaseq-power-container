@@ -18,17 +18,20 @@ if(mode=="none") {
   result<-optimize_parameter(fun=est_power,main=main,opt1="rho",opt2="f",opt1Value=c(1.1,2,3,4),opt2Value=c(0.01,0.03,0.05,0.1,0.2),m=m,m1=m1,n=n,phi0=phi0,lambda0=lambda0)
 }
 if(mode=="data") {
-counts_file_path <- args[5]
-tab = read.table(counts_file_path, header=TRUE, sep="\t")
-# only keep read counts
-tab = tab[sapply(tab, is.numeric)]
-counts <- as.matrix(tab[-1,-1])
-dim(counts)
-distrObject <- est_count_dispersion(counts)
-testGenes = min(1000,nrow(counts))
+  counts_file_path <- args[5]
+  tab = read.table(counts_file_path, header=TRUE, sep="\t")
+  # only keep read counts
+  tab = tab[sapply(tab, is.numeric)]
+  counts <- as.matrix(tab[-1,-1])
+  dim(counts)
+  # if there are less than 1000 genes we need to create more data, as RNASeqSampleSize doesn't work otherwise...
+  if(nrow(counts) < 1000) {
+    copies <- ceiling(1000/nrow(counts))
+    counts <- do.call(rbind, replicate(copies, counts, simplify=FALSE))
+  }
+  distrObject <- est_count_dispersion(counts)
 }
 if(mode=="tcga") {
-  testGenes = 1000
   distrObject <- args[5]
   #data(list = distrObject)
 }
