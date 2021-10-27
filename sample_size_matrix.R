@@ -37,7 +37,7 @@ if(mode=="tcga") {
 }
 if(mode=="tcga" || mode=="data") {
   result_file <- args[6]
-  result<-optimize_parameter(fun=sample_size_distribution,main=main,opt1="rho", opt2="power",opt1Value=c(1.5,2,3,4), opt2Value=c(0.5,0.6,0.7,0.8,0.9,0.95),distributionObject=distrObject, m=m, m1=m1,f=f)  
+  result<-optimize_parameter(fun=sample_size_distribution,main=main,opt1="rho", opt2="power",opt1Value=c(1.5,2,3,4), opt2Value=c(0.5,0.7,0.9,0.95),distributionObject=distrObject, m=m, m1=m1,f=f)  
 }
 print(result)
 pdf(result_file)
