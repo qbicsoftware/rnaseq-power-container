@@ -1,5 +1,8 @@
 library(RnaSeqSampleSize)
 library(heatmap3)
+library(RColorBrewer)
+
+colors <- colorRampPalette(brewer.pal(9,"Blues"))(100)
 
 args <- commandArgs(trailingOnly = TRUE)
 print(args)
@@ -41,5 +44,5 @@ if(mode=="tcga" || mode=="data") {
 }
 print(result)
 pdf(result_file) 
-heatmap3(result, Colv = NA, Rowv = NA, xlab = "Minimum detectable log fold change", ylab = "False discovery rate", scale = "n", col = matlab::jet.colors(1000), cexCol = 1, cexRow = 1, lasCol = 1, lasRow = 1, main = "Power (sensitivity)")
+heatmap3(result, Colv = NA, Rowv = NA, xlab = "Minimum detectable log fold change", ylab = "False discovery rate", scale = "n", col = colors, cexCol = 1, cexRow = 1, lasCol = 1, lasRow = 1, main = "Power (sensitivity)")
 dev.off()
